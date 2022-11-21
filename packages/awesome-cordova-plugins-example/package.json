@@ -1,7 +1,7 @@
 {
-  "name": "awesome-cordova-plugins-example",
+  "name": "vnpay-native-sdk",
   "version": "1.0.0",
-  "description": "Native plugin wrapper for cordova-plugin-example",
+  "description": "Native plugin wrapper for cordova-vnpay-sdk",
   "scripts": {
     "build:esm": "ts-node -P scripts/tsconfig.json scripts/tasks/build-esm",
     "build:es5": "ts-node -P scripts/tsconfig.json scripts/tasks/build-es5",

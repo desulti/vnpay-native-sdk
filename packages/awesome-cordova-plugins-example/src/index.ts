@@ -1,95 +1,50 @@
 import { Injectable } from '@angular/core';
-import { Cordova, Plugin, AwesomeCordovaNativePlugin } from '@awesome-cordova-plugins/core';
-import { Observable } from 'rxjs';
+import { Plugin, Cordova, CordovaProperty, CordovaInstance, InstanceProperty, AwesomeCordovaNativePlugin } from '@awesome-cordova-plugins/core';
 
-
-// We will define first two interfaces for
-// the Bitcoin current price response.
-// I don't know at this moment if we
-// can define this interfaces in different files.
-// I wasn't completely successful when I tried to
-// do it, at least with the 'build-ngx' script.
-
-export interface BPI {
-  code: string;
-  description: string;
-  rate: string;
-  rate_float: number;
-  symbol: string;
-}
-
-export interface BitcoinCurrentPriceResponse {
-  bpi: {
-    EUR: BPI;
-    GBP: BPI;
-    USD: BPI;
-  },
-  chartName: string;
-  disclaimer: string;
-  time: {
-    updated: string;
-    updatedISO: string;
-    updateduk: string;
-  }
-}
-
-
-// We need two decorators @Plugin and @Injectable.
-//
-// For the @Plugin properties, remember what we wrote
-// in our plugin's plugin.xml file:
-//
-// <!-- www -->
-// <js-module name="CordovaPluginExample" src="www/CordovaPluginExample.js">
-//   <clobbers target="cordova.plugins.CordovaPluginExample" />
-// </js-module>
-//
-// pluginName == js-module.name
-// pluginRef == clobbers.target
-
+/**
+ * @name VnPaySdk
+ * @description
+ * This plugin connect to Vn Pay Sdk
+ *
+ * @usage
+ * ```typescript
+ * import { VnPaySdk } from '@awesome-cordova-plugins/vn-pay-sdk';
+ *
+ *
+ * constructor(private vnPaySdk: VnPaySdk) { }
+ *
+ * ...
+ *
+ *
+ * this.vnPaySdk.openSdk('https://sandbox.vnpayment.vn/testsdk/', 'FAHASA03', 'resultactivity', 123)
+ *   .then((res: any) => console.log(res))
+ *   .catch((error: any) => console.error(error));
+ *
+ * ```
+ */
 @Plugin({
-  pluginName: 'CordovaPluginExample',
-  plugin: 'cordova-plugin-example',
-  pluginRef: 'cordova.plugins.CordovaPluginExample',
-  repo: 'https://github.com/adrian-bueno/multiplatform-cordova-plugin-example',
-  platforms: ['Android', 'iOS', 'Electron']
+  pluginName: 'VnPaySdk',
+  plugin: 'com.iii.vnpaysdk',
+  pluginRef: 'cordova.plugins.VnPaySdk',
+  repo: '',
+  install: '',
+  installVariables: [],
+  platforms: ['android']
 })
 @Injectable()
-export class AwesomeCordovaPluginExample extends AwesomeCordovaNativePlugin {
+export class VnPaySdk extends AwesomeCordovaNativePlugin {
 
-  // For every method, use the @Cordova decorator.
-  // Since in our Cordova plugin JavaScript file (www/CordovaPluginExample.js)
-  // we defined callback functions before parameters,
-  // now we have to declare 'callbackOrder' as 'reverse'.
-
-  @Cordova({
-    callbackOrder: 'reverse'
-  })
-  greeting(name?: string): Promise<string> { return null; }
-
-  // If a method can return multiple values over time,
-  // declare the property 'observable' as 'true'.
-
-  @Cordova({
-    observable: true,
-    callbackOrder: 'reverse'
-  })
-  countdownTimer(seconds?: number): Observable<number> { return null; }
-
-  // We don't have to add any logic to the methods, just return null.
-
-  @Cordova({
-    callbackOrder: 'reverse'
-  })
-  writeFile(fileName: string, text: string): Promise<string> { return null; }
-
-  @Cordova({
-    callbackOrder: 'reverse'
-  })
-  bitcoinCurrentPrice(): Promise<BitcoinCurrentPriceResponse> { return null; }
+  /**
+   * This function call cordova vnpay sdk
+   * @param url {string} url generated from merchant server
+   * @param tmnCode {string} tmnCode granted by vnpay
+   * @param scheme {string} scheme to return to your app when payment finish
+   * @param isSandbox {boolean} is production or stage
+   * @return {Promise<any>} Returns a promise that resolves when payment finish
+   */
+  @Cordova()
+  openSdk(url: string, tmnCode: string, scheme: string, isSandbox: boolean): Promise<any> {
+    return; // We add return; here to avoid any IDE / Compiler errors
+  }
 
 }
-
-// Check more `@Plugin` and `@Cordova` options (and other details)
-// in the official developer documentation:
-// https://github.com/danielsogl/awesome-cordova-plugins/blob/master/DEVELOPER.md
